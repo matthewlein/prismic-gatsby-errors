@@ -7,7 +7,9 @@ export const query = graphql`
       allProducts(uid: $uid) {
         edges {
           node {
-            product
+            product_name,
+            product_description,
+            product_image,
           }
         }
       }
@@ -18,10 +20,9 @@ export const query = graphql`
 const Page = props => {
   const doc = props.data.prismic.allProducts.edges.slice(0, 1).pop()
   if (!doc) return null
-
   return (
     <div>
-      <h1>Product: {doc.node.product.title}</h1>
+      {doc.node.product_name.map(({ text }) => (<h1>Product: {text}</h1>))}
     </div>
   )
 }
